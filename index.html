@@ -1,0 +1,969 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Matemática Inclusiva: aplicativo educativo
+          com atividades matemáticas, dicas visuais,
+          recompensas e acompanhamento de aprendizagem.">
+
+    <title>Matemática Inclusiva</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<main class="container">
+
+    <!-- ==========================================
+         CABEÇALHO PRINCIPAL
+    =========================================== -->
+
+    <header class="cabecalho-app">
+
+        <h1>🌟 Matemática Inclusiva</h1>
+
+        <p id="subtituloApp">
+            Aprender matemática pode ser uma aventura!
+        </p>
+
+    </header>
+
+
+    <!-- ==========================================
+         TELA 1 - SELEÇÃO DE PERFIS
+    =========================================== -->
+
+    <section id="telaPerfis">
+
+        <h2>👋 Quem vai aprender hoje?</h2>
+
+        <p>
+            Escolha seu perfil para continuar
+            sua aventura matemática.
+        </p>
+
+        <!-- Perfis cadastrados pelo JavaScript -->
+
+        <div id="listaPerfis"
+             class="grade-perfis">
+        </div>
+
+        <p id="mensagemSemPerfis">
+            Ainda não temos perfis cadastrados.
+            Vamos criar o primeiro!
+        </p>
+
+        <button type="button"
+                id="btnCriarPerfil">
+
+            ➕ Criar novo perfil
+
+        </button>
+
+        <button type="button"
+                id="btnAreaResponsavel"
+                class="botao-secundario">
+
+            👨‍👩‍👧 Área do responsável
+
+        </button>
+
+    </section>
+
+
+    <!-- ==========================================
+         TELA 2 - CADASTRO DA CRIANÇA
+    =========================================== -->
+
+    <form id="formCadastro" hidden>
+
+        <h2>📝 Cadastro da criança</h2>
+
+        <p>
+            Vamos preparar uma aventura
+            especial para você!
+        </p>
+
+
+        <!-- FOTO OU AVATAR -->
+
+        <div class="avatar-area">
+
+            <label for="fotoCrianca"
+                   class="avatar"
+                   id="avatarPreview">
+
+                <span id="avatarTexto">👤</span>
+
+                <img id="avatarImagem"
+                     alt="Foto escolhida"
+                     hidden>
+
+            </label>
+
+            <label for="fotoCrianca"
+                   class="texto-foto">
+
+                Escolher foto (opcional)
+
+            </label>
+
+            <input type="file"
+                   id="fotoCrianca"
+                   accept="image/*"
+                   hidden>
+
+        </div>
+
+
+        <!-- NOME -->
+
+        <label for="nome">
+            Nome da criança
+        </label>
+
+        <input type="text"
+               id="nome"
+               maxlength="40"
+               placeholder="Digite o nome"
+               autocomplete="off"
+               required>
+
+
+        <!-- IDADE -->
+
+        <label for="idade">
+            Idade
+        </label>
+
+        <input type="number"
+               id="idade"
+               min="1"
+               max="17"
+               placeholder="Digite a idade"
+               required>
+
+
+        <!-- DIFICULDADES INFORMADAS -->
+
+        <fieldset>
+
+            <legend>
+                Em quais operações a criança
+                sente mais dificuldade?
+            </legend>
+
+            <label class="opcao">
+                <input type="checkbox"
+                       name="operacao"
+                       value="adicao">
+                Adição (+)
+            </label>
+
+            <label class="opcao">
+                <input type="checkbox"
+                       name="operacao"
+                       value="subtracao">
+                Subtração (−)
+            </label>
+
+            <label class="opcao">
+                <input type="checkbox"
+                       name="operacao"
+                       value="multiplicacao">
+                Multiplicação (×)
+            </label>
+
+            <label class="opcao">
+                <input type="checkbox"
+                       name="operacao"
+                       value="divisao">
+                Divisão (÷)
+            </label>
+
+        </fieldset>
+
+
+        <!-- NÍVEL INICIAL -->
+
+        <div class="selecao-nivel">
+
+            <label for="nivelInicial">
+                🌟 Escolha o nível inicial
+            </label>
+
+            <select id="nivelInicial">
+
+                <option value="1">🟢 Fácil</option>
+                <option value="2">🔵 Médio</option>
+                <option value="3">🟣 Difícil</option>
+
+            </select>
+
+            <p>
+                O aplicativo ajustará automaticamente
+                a dificuldade conforme o desempenho.
+            </p>
+
+        </div>
+
+
+        <!-- VALIDAÇÃO -->
+
+        <p id="mensagemErro"
+           role="alert">
+        </p>
+
+
+        <!-- SALVAR PERFIL -->
+
+        <button type="submit"
+                id="btnSalvarPerfil">
+
+            💾 Salvar perfil e começar
+
+        </button>
+
+        <button type="button"
+                id="btnCancelarCadastro"
+                class="botao-secundario">
+
+            ← Voltar aos perfis
+
+        </button>
+
+    </form>
+
+
+    <!-- ==========================================
+         TELA 3 - PAINEL DA CRIANÇA
+    =========================================== -->
+
+    <section id="telaPainelCrianca" hidden>
+
+        <h2 id="boasVindasCrianca">
+            Bem-vindo!
+        </h2>
+
+        <div class="cartao-perfil-ativo">
+
+            <div id="fotoPerfilAtivo"
+                 class="foto-perfil-ativo">
+                🧑‍🚀
+            </div>
+
+            <div class="dados-perfil-ativo">
+
+                <strong id="nomePerfilAtivo">
+                    Criança
+                </strong>
+
+                <p id="nivelPerfilAtivo">
+                    🟢 Fácil
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- RECOMPENSAS DO PERFIL -->
+
+        <div class="painel-recompensas">
+
+            <span>
+                🪙 Moedas:
+                <strong id="moedasPainelCrianca">0</strong>
+            </span>
+
+            <span>
+                🏆 Troféus:
+                <strong id="trofeusPainelCrianca">0</strong>
+            </span>
+
+        </div>
+
+
+        <!-- RESUMO DO PROGRESSO -->
+
+        <div class="resumo-perfil-crianca">
+
+            <div class="cartao-numero azul">
+
+                <strong id="totalQuestoesPerfil">0</strong>
+
+                <span>Questões</span>
+
+            </div>
+
+            <div class="cartao-numero verde">
+
+                <strong id="totalAcertosPerfil">0</strong>
+
+                <span>Acertos</span>
+
+            </div>
+
+            <div class="cartao-numero laranja">
+
+                <strong id="totalAtividadesPerfil">0</strong>
+
+                <span>Atividades</span>
+
+            </div>
+
+        </div>
+
+
+        <!-- AÇÕES DA CRIANÇA -->
+
+        <button type="button"
+                id="btnIniciarAtividade">
+
+            🚀 Começar atividade
+
+        </button>
+
+        <button type="button"
+                id="btnColecaoCrianca"
+                class="botao-secundario">
+
+            🎨 Minha coleção e troféus
+
+        </button>
+
+        <button type="button"
+                id="btnVoltarPerfis"
+                class="botao-secundario">
+
+            ← Trocar de perfil
+
+        </button>
+
+    </section>
+
+
+    <!-- ==========================================
+         TELA 4 - EXERCÍCIOS MATEMÁTICOS
+    =========================================== -->
+
+    <section id="telaExercicios" hidden>
+
+        <h2 id="tituloExercicios">
+            Vamos praticar!
+        </h2>
+
+
+        <!-- NÍVEL -->
+
+        <div class="indicador-nivel">
+
+            <span>⭐ Nível atual:</span>
+
+            <strong id="nivelAtualTexto">
+                🟢 Fácil
+            </strong>
+
+        </div>
+
+
+        <!-- ACERTOS E ERROS -->
+
+        <div class="painel-progresso">
+
+            <p>
+                ✅ Acertos:
+                <span id="acertos">0</span>
+            </p>
+
+            <p>
+                ❌ Erros:
+                <span id="erros">0</span>
+            </p>
+
+        </div>
+
+
+        <!-- MOEDAS E TROFÉUS -->
+
+        <div class="painel-recompensas">
+
+            <span>
+                🪙 Moedas:
+                <strong id="moedasAtuais">0</strong>
+            </span>
+
+            <span>
+                🏆 Troféus:
+                <strong id="trofeusAtuais">0</strong>
+            </span>
+
+        </div>
+
+
+        <!-- AVATAR -->
+
+        <div class="avatar-jogo">
+
+            <span id="avatarJogo"
+                  role="img"
+                  aria-label="Avatar da criança">
+                🧑‍🚀
+            </span>
+
+            <p>Meu personagem</p>
+
+        </div>
+
+
+        <!-- CALCULADORA -->
+
+        <div class="calculadora">
+
+            <h2 id="perguntaMatematica">
+                2 + 3 = ?
+            </h2>
+
+            <label for="resposta">
+                Sua resposta:
+            </label>
+
+            <input type="number"
+                   id="resposta"
+                   placeholder="Digite sua resposta"
+                   inputmode="numeric"
+                   autocomplete="off">
+
+            <button type="button"
+                    id="btnResponder">
+
+                Confirmar resposta
+
+            </button>
+
+
+            <!-- DICAS -->
+
+            <button type="button"
+                    id="btnDica">
+
+                💡 Preciso de ajuda
+
+            </button>
+
+            <p id="informacaoDicas"
+               aria-live="polite">
+
+                🎁 Você tem 3 dicas gratuitas!
+
+            </p>
+
+
+            <!-- DICAS VISUAIS -->
+
+            <div id="painelDica" hidden>
+
+                <h3>
+                    💡 Vamos aprender juntos!
+                </h3>
+
+                <p id="textoDica"></p>
+
+                <div id="visualDica"></div>
+
+            </div>
+
+
+            <!-- FEEDBACK -->
+
+            <p id="feedback"
+               role="status"
+               aria-live="polite">
+            </p>
+
+        </div>
+
+
+        <!-- ENCERRAR -->
+
+        <button type="button"
+                id="btnParar">
+
+            ⏹️ Parar atividade
+
+        </button>
+
+    </section>
+
+
+    <!-- ==========================================
+         TELA 5 - RELATÓRIO DA ATIVIDADE
+    =========================================== -->
+
+    <section id="telaRelatorio" hidden>
+
+        <div class="cabecalho-relatorio">
+
+            <div class="trofeu">🏆</div>
+
+            <h2>Minha aventura matemática!</h2>
+
+            <p id="mensagemRelatorio"></p>
+
+        </div>
+
+
+        <!-- RESULTADOS -->
+
+        <div class="resumo-relatorio">
+
+            <div class="cartao-numero azul">
+
+                <strong id="relTotal">0</strong>
+
+                <span>Questões</span>
+
+            </div>
+
+            <div class="cartao-numero verde">
+
+                <strong id="relAcertos">0</strong>
+
+                <span>Acertos</span>
+
+            </div>
+
+            <div class="cartao-numero laranja">
+
+                <strong id="relErros">0</strong>
+
+                <span>Erros</span>
+
+            </div>
+
+        </div>
+
+
+        <!-- GRÁFICO CIRCULAR -->
+
+        <div class="painel-aproveitamento">
+
+            <h3>📈 Meu aproveitamento</h3>
+
+            <div class="grafico-circular"
+                 id="graficoCircular">
+
+                <div class="centro-grafico">
+
+                    <strong id="relPercentual">0%</strong>
+
+                    <span>de acertos</span>
+
+                </div>
+
+            </div>
+
+            <p id="explicacaoAproveitamento"></p>
+
+        </div>
+
+
+        <!-- GRÁFICO POR OPERAÇÃO -->
+
+        <div class="painel-operacoes">
+
+            <h3>📊 Como fui em cada operação?</h3>
+
+            <p>Veja quantas questões você acertou!</p>
+
+            <div id="graficoOperacoes"></div>
+
+        </div>
+
+
+        <!-- GRÁFICOS POR NÍVEL E NÚMEROS
+             CRIADOS PELO JAVASCRIPT -->
+
+
+        <!-- PONTOS PARA PRATICAR -->
+
+        <div class="painel-dificuldades">
+
+            <h3>💡 O que posso praticar mais?</h3>
+
+            <p id="dificuldadeOperacao"></p>
+
+            <p id="dificuldadeNumeros"></p>
+
+        </div>
+
+
+        <!-- INFORMAÇÕES -->
+
+        <div class="painel-informacoes">
+
+            <h3>📝 Informações da atividade</h3>
+
+            <p id="dificuldadesInformadas"></p>
+
+        </div>
+
+
+        <!-- LOJA DE AVATARES -->
+
+        <div class="painel-loja">
+
+            <h3>🎨 Minha coleção de avatares</h3>
+
+            <p>
+                Use suas moedas para desbloquear
+                novos personagens!
+            </p>
+
+            <p class="saldo-loja">
+
+                🪙 Saldo:
+
+                <strong id="saldoLoja">0</strong>
+
+            </p>
+
+            <div id="listaAvatares"
+                 class="grade-avatares">
+            </div>
+
+        </div>
+
+
+        <!-- TROFÉUS -->
+
+        <div class="painel-trofeus">
+
+            <h3>🏆 Minhas conquistas</h3>
+
+            <div id="listaTrofeus"></div>
+
+        </div>
+
+
+        <!-- NOVA ATIVIDADE -->
+
+        <button type="button"
+                id="btnNovaAtividade">
+
+            🌟 Fazer outra atividade
+
+        </button>
+
+        <button type="button"
+                id="btnVoltarPainelCrianca"
+                class="botao-secundario">
+
+            ← Voltar ao meu perfil
+
+        </button>
+
+    </section>
+
+
+    <!-- ==========================================
+         TELA 6 - COLEÇÃO DA CRIANÇA
+    =========================================== -->
+
+    <section id="telaColecao" hidden>
+
+        <h2>🎨 Minha coleção</h2>
+
+        <p>
+            Aqui estão seus personagens
+            e suas conquistas!
+        </p>
+
+        <div class="painel-loja">
+
+            <h3>🧑‍🚀 Meus avatares</h3>
+
+            <p class="saldo-loja">
+
+                🪙 Saldo:
+
+                <strong id="saldoColecao">0</strong>
+
+            </p>
+
+            <div id="listaAvataresColecao"
+                 class="grade-avatares">
+            </div>
+
+        </div>
+
+        <div class="painel-trofeus">
+
+            <h3>🏆 Meus troféus</h3>
+
+            <div id="listaTrofeusColecao"></div>
+
+        </div>
+
+        <button type="button"
+                id="btnSairColecao"
+                class="botao-secundario">
+
+            ← Voltar ao meu perfil
+
+        </button>
+
+    </section>
+
+
+    <!-- ==========================================
+         TELA 7 - ACESSO DO RESPONSÁVEL
+    =========================================== -->
+
+    <section id="telaAcessoResponsavel" hidden>
+
+        <h2>🔐 Área do responsável</h2>
+
+        <p>
+            Este espaço permite acompanhar
+            o desenvolvimento das crianças
+            cadastradas.
+        </p>
+
+        <form id="formAcessoResponsavel">
+
+            <label for="senhaResponsavel">
+                Senha do responsável
+            </label>
+
+            <input type="password"
+                   id="senhaResponsavel"
+                   placeholder="Digite sua senha"
+                   autocomplete="current-password"
+                   required>
+
+            <p id="mensagemAcessoResponsavel"
+               role="alert">
+            </p>
+
+            <button type="submit">
+                🔓 Acessar relatórios
+            </button>
+
+        </form>
+
+        <button type="button"
+                id="btnVoltarAcesso"
+                class="botao-secundario">
+
+            ← Voltar aos perfis
+
+        </button>
+
+    </section>
+
+
+    <!-- ==========================================
+         TELA 8 - PAINEL DO RESPONSÁVEL
+    =========================================== -->
+
+    <section id="telaResponsavel" hidden>
+
+        <h2>👨‍👩‍👧 Painel do responsável</h2>
+
+        <p>
+            Acompanhe o progresso educacional
+            de cada criança.
+        </p>
+
+
+        <!-- SELEÇÃO DA CRIANÇA -->
+
+        <div class="seletor-crianca">
+
+            <label for="selecionarCriancaRelatorio">
+                Selecione uma criança:
+            </label>
+
+            <select id="selecionarCriancaRelatorio">
+
+                <option value="">
+                    Selecione um perfil
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- INFORMAÇÕES DO PERFIL -->
+
+        <div class="painel-informacoes">
+
+            <h3>👤 Informações da criança</h3>
+
+            <div id="informacoesCriancaResponsavel"></div>
+
+        </div>
+
+
+        <!-- INDICADORES GERAIS -->
+
+        <div class="resumo-relatorio">
+
+            <div class="cartao-numero azul">
+
+                <strong id="respTotalAtividades">0</strong>
+
+                <span>Atividades</span>
+
+            </div>
+
+            <div class="cartao-numero verde">
+
+                <strong id="respTotalAcertos">0</strong>
+
+                <span>Acertos</span>
+
+            </div>
+
+            <div class="cartao-numero laranja">
+
+                <strong id="respTotalErros">0</strong>
+
+                <span>Erros</span>
+
+            </div>
+
+        </div>
+
+
+        <!-- APROVEITAMENTO ACUMULADO -->
+
+        <div class="painel-aproveitamento">
+
+            <h3>📈 Aproveitamento geral</h3>
+
+            <div class="grafico-circular"
+                 id="graficoCircularResponsavel">
+
+                <div class="centro-grafico">
+
+                    <strong id="respPercentual">0%</strong>
+
+                    <span>de acertos</span>
+
+                </div>
+
+            </div>
+
+            <p id="textoAproveitamentoResponsavel"></p>
+
+        </div>
+
+
+        <!-- EVOLUÇÃO DAS ATIVIDADES -->
+
+        <div class="painel-operacoes">
+
+            <h3>📊 Evolução da aprendizagem</h3>
+
+            <p>
+                Compare os resultados das
+                atividades realizadas.
+            </p>
+
+            <div id="graficoEvolucao"></div>
+
+        </div>
+
+
+        <!-- DESEMPENHO POR OPERAÇÃO -->
+
+        <div class="painel-operacoes">
+
+            <h3>➕ Desempenho por operação</h3>
+
+            <div id="graficoOperacoesResponsavel"></div>
+
+        </div>
+
+
+        <!-- HISTÓRICO -->
+
+        <div class="painel-informacoes">
+
+            <h3>📚 Histórico de atividades</h3>
+
+            <div id="historicoAtividades"></div>
+
+        </div>
+
+
+        <!-- RECOMENDAÇÕES -->
+
+        <div class="painel-dificuldades">
+
+            <h3>💡 Sugestões de prática</h3>
+
+            <div id="recomendacoesResponsavel"></div>
+
+        </div>
+
+
+        <!-- GERENCIAMENTO -->
+
+        <div class="painel-gerenciamento">
+
+            <h3>⚙️ Gerenciar perfil</h3>
+
+            <button type="button"
+                    id="btnEditarPerfil"
+                    class="botao-secundario">
+
+                ✏️ Editar perfil selecionado
+
+            </button>
+
+            <button type="button"
+                    id="btnExcluirPerfil"
+                    class="botao-perigo">
+
+                🗑️ Excluir perfil selecionado
+
+            </button>
+
+        </div>
+
+
+        <!-- SAIR -->
+
+        <button type="button"
+                id="btnSairResponsavel"
+                class="botao-secundario">
+
+            🔒 Sair da área do responsável
+
+        </button>
+
+    </section>
+
+</main>
+
+
+<!-- ==========================================
+     JAVASCRIPT
+=========================================== -->
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
